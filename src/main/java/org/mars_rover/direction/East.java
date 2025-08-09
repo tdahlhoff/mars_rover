@@ -1,0 +1,19 @@
+package org.mars_rover.direction;
+
+public class East extends AbstractDirection {
+
+    @Override
+    public Direction turnLeft() {
+        return new North();
+    }
+
+    @Override
+    public Direction turnRight() {
+        return new South();
+    }
+
+    @Override
+    public DirectionEnum getDirection() {
+        return DirectionEnum.EAST;
+    }
+}
