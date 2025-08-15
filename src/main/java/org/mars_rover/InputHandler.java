@@ -49,4 +49,11 @@ public class InputHandler {
         };
         return commands;
     }
+
+    public Position readTargetPosition() {
+        System.out.println("Gib nun die Ziel-Koordinaten ein (z.B. 10 5):");
+        int x = scanner.nextInt();
+        int y = scanner.nextInt();
+        return new Position(x, y);
+    }
 }

@@ -13,7 +13,7 @@ public class South extends AbstractDirection {
     }
 
     @Override
-    public DirectionEnum getDirection() {
+    public DirectionEnum getDirectionEnum() {
         return DirectionEnum.SOUTH;
     }
 }

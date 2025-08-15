@@ -38,12 +38,12 @@ public abstract class AbstractVehicle extends AbstractGridEntity implements Vehi
     public void moveForward(int steps) {
         int distance = steps * getStepSize();
         Position newPosition;
-        switch (direction.getDirection()) {
+        switch (direction.getDirectionEnum()) {
             case NORTH -> newPosition = new Position(position.x, position.y-distance);
             case EAST -> newPosition = new Position(position.x+distance, position.y);
             case SOUTH -> newPosition = new Position(position.x, position.y+distance);
             case WEST -> newPosition = new Position(position.x-distance, position.y);
-            default -> throw new IllegalStateException("Unexpected value: " + direction.getDirection());
+            default -> throw new IllegalStateException("Unexpected value: " + direction.getDirectionEnum());
         }
         getGrid().ensurePositionInsideBounds(newPosition);
         getGrid().ensurePositionIsFree(newPosition);

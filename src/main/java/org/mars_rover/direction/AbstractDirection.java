@@ -4,6 +4,6 @@ public abstract class AbstractDirection implements Direction {
 
     @Override
     public String toString() {
-        return this.getDirection().getCode();
+        return this.getDirectionEnum().getCode();
     }
 }
