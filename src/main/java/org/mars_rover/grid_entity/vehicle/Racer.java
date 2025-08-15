@@ -1,11 +1,11 @@
-package org.mars_rover.plateauEntity.vehicle;
+package org.mars_rover.grid_entity.vehicle;
 
 import org.mars_rover.Position;
 import org.mars_rover.direction.Direction;
 
-public class Rover extends AbstractVehicle {
+public class Racer extends AbstractVehicle {
 
-    public Rover(Position position, Direction direction) {
+    public Racer(Position position, Direction direction) {
         super(position, direction);
     }
 
@@ -16,6 +16,6 @@ public class Rover extends AbstractVehicle {
 
     @Override
     public int getStepSize() {
-        return 1;
+        return 2;
     }
 }

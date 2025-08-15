@@ -1,8 +1,8 @@
-package org.mars_rover.plateauEntity;
+package org.mars_rover.grid_entity;
 
 import org.mars_rover.Position;
 
-public class Rock implements PlateauEntity {
+public class Rock extends AbstractGridEntity {
 
     private final Position position;
 

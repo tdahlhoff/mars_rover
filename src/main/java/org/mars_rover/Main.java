@@ -1,26 +1,37 @@
 package org.mars_rover;
 
-import org.mars_rover.direction.North;
-import org.mars_rover.plateauEntity.Rock;
-import org.mars_rover.plateauEntity.vehicle.Rover;
+import org.mars_rover.command.VehicleCommand;
+import org.mars_rover.grid_entity.vehicle.Rover;
+import org.mars_rover.printer.GridPrinter;
+import org.mars_rover.printer.VehiclePrinter;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         try {
-            Plateau plateau = new Plateau(10, 10);
-            Rover rover = new Rover(new Position(1, 5), new North());
-            plateau.placePlateauEntity(rover);
-            plateau.printPlateau();
-            Rock rock1 = new Rock(new Position(7, 1));
-            Rock rock2 = new Rock(new Position(1, 9));
-            plateau.placePlateauEntity(rock1);
-            plateau.placePlateauEntity(rock2);
-            plateau.printPlateau();
-            rover.moveForward(plateau, 1);
-            plateau.printPlateau();
-            rover.turnRight();
-            rover.moveForward(plateau, 6);
-            plateau.printPlateau();
+            Scanner scanner = new Scanner(System.in);
+            InputHandler inputHandler = new InputHandler(scanner);
+            Plateau plateau = new Plateau();
+
+            Grid grid = plateau.getGrid();
+            GridPrinter gridPrinter = new GridPrinter(grid);
+
+            Rover rover = inputHandler.createRover();
+            VehiclePrinter vehiclePrinter = new VehiclePrinter(rover);
+            grid.placeGridEntity(rover);
+
+            gridPrinter.print();
+            vehiclePrinter.print();
+
+            List<VehicleCommand> commands = inputHandler.readCommands();
+            rover.executeCommands(commands);
+
+            gridPrinter.print();
+            vehiclePrinter.print();
+
+            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

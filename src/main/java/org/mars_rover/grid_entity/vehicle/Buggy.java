@@ -1,4 +1,4 @@
-package org.mars_rover.plateauEntity.vehicle;
+package org.mars_rover.grid_entity.vehicle;
 
 import org.mars_rover.Position;
 import org.mars_rover.direction.Direction;
@@ -16,6 +16,6 @@ public class Buggy extends AbstractVehicle {
 
     @Override
     public int getStepSize() {
-        return 2;
+        return 1;
     }
 }

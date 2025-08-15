@@ -1,4 +1,4 @@
-package org.mars_rover.plateauEntity.vehicle;
+package org.mars_rover.grid_entity.vehicle;
 
 import org.mars_rover.direction.Direction;
 

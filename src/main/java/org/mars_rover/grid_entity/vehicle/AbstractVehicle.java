@@ -1,11 +1,14 @@
-package org.mars_rover.plateauEntity.vehicle;
+package org.mars_rover.grid_entity.vehicle;
 
-import org.mars_rover.Plateau;
 import org.mars_rover.Position;
+import org.mars_rover.command.VehicleCommand;
 import org.mars_rover.direction.Direction;
-import org.mars_rover.plateauEntity.PlateauEntity;
+import org.mars_rover.exception.GridPositionException;
+import org.mars_rover.grid_entity.AbstractGridEntity;
 
-public abstract class AbstractVehicle implements Vehicle, PlateauEntity {
+import java.util.List;
+
+public abstract class AbstractVehicle extends AbstractGridEntity implements Vehicle {
     private Position position;
     private Direction direction;
 
@@ -32,7 +35,7 @@ public abstract class AbstractVehicle implements Vehicle, PlateauEntity {
         direction = direction.turnLeft();
     }
 
-    public void moveForward(Plateau plateau, int steps) {
+    public void moveForward(int steps) {
         int distance = steps * getStepSize();
         Position newPosition;
         switch (direction.getDirection()) {
@@ -42,8 +45,16 @@ public abstract class AbstractVehicle implements Vehicle, PlateauEntity {
             case WEST -> newPosition = new Position(position.x-distance, position.y);
             default -> throw new IllegalStateException("Unexpected value: " + direction.getDirection());
         }
-        plateau.ensurePositionIsInPlateau(newPosition);
-        plateau.ensurePositionIsFree(newPosition);
+        getGrid().ensurePositionInsideBounds(newPosition);
+        getGrid().ensurePositionIsFree(newPosition);
         position = newPosition;
+    }
+
+    public void executeCommands(List<VehicleCommand> commands) {
+        try {
+            commands.forEach(command -> command.execute(this));
+        } catch (GridPositionException e) {
+            // noop
+        }
     }
 }
