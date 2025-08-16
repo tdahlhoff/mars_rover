@@ -4,15 +4,8 @@ import org.marsrover.Position;
 
 public class Rock extends AbstractGridEntity {
 
-    private final Position position;
-
     public Rock(Position position) {
-        this.position = position;
-    }
-
-    @Override
-    public Position getPosition() {
-        return position;
+        super(position);
     }
 
     @Override

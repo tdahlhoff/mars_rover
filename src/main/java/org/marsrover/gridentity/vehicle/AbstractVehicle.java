@@ -9,17 +9,12 @@ import org.marsrover.gridentity.AbstractGridEntity;
 import java.util.List;
 
 public abstract class AbstractVehicle extends AbstractGridEntity implements Vehicle {
-    private Position position;
+
     private Direction direction;
 
     public AbstractVehicle(Position position, Direction direction) {
-        this.position = position;
+        super(position);
         this.direction = direction;
-    }
-
-    @Override
-    public Position getPosition() {
-        return position;
     }
 
     @Override
@@ -27,27 +22,30 @@ public abstract class AbstractVehicle extends AbstractGridEntity implements Vehi
         return direction;
     }
 
+    @Override
     public void turnRight() {
         direction = direction.turnRight();
     }
 
+    @Override
     public void turnLeft() {
         direction = direction.turnLeft();
     }
 
+    @Override
     public void moveForward(int steps) {
         int distance = steps * getStepSize();
         Position newPosition;
         switch (direction.getDirectionEnum()) {
-            case NORTH -> newPosition = new Position(position.x, position.y-distance);
-            case EAST -> newPosition = new Position(position.x+distance, position.y);
-            case SOUTH -> newPosition = new Position(position.x, position.y+distance);
-            case WEST -> newPosition = new Position(position.x-distance, position.y);
+            case NORTH -> newPosition = new Position(getPosition().x, getPosition().y-distance);
+            case EAST -> newPosition = new Position(getPosition().x+distance, getPosition().y);
+            case SOUTH -> newPosition = new Position(getPosition().x, getPosition().y+distance);
+            case WEST -> newPosition = new Position(getPosition().x-distance, getPosition().y);
             default -> throw new IllegalStateException("Unexpected value: " + direction.getDirectionEnum());
         }
         getGrid().ensurePositionInsideBounds(newPosition);
         getGrid().ensurePositionIsFree(newPosition);
-        position = newPosition;
+        setPosition(newPosition);
     }
 
     public void executeCommands(List<VehicleCommand> commands) {

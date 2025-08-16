@@ -1,11 +1,11 @@
 package org.marsrover.printer;
 
-import org.marsrover.gridentity.vehicle.AbstractVehicle;
+import org.marsrover.gridentity.vehicle.Vehicle;
 
 public class VehiclePrinter {
-    private final AbstractVehicle vehicle;
+    private final Vehicle vehicle;
 
-    public VehiclePrinter(AbstractVehicle vehicle) {
+    public VehiclePrinter(Vehicle vehicle) {
         this.vehicle = vehicle;
     }
 

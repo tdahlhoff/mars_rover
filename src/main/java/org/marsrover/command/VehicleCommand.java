@@ -1,7 +1,7 @@
 package org.marsrover.command;
 
-import org.marsrover.gridentity.vehicle.AbstractVehicle;
+import org.marsrover.gridentity.vehicle.Vehicle;
 
 public interface VehicleCommand {
-    void execute(AbstractVehicle vehicle);
+    void execute(Vehicle vehicle);
 }
