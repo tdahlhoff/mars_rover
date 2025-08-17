@@ -4,6 +4,7 @@ import org.marsrover.command.MoveForwardCommand;
 import org.marsrover.command.TurnLeftCommand;
 import org.marsrover.command.TurnRightCommand;
 import org.marsrover.command.VehicleCommand;
+import org.marsrover.configuration.AppConfig;
 import org.marsrover.direction.Direction;
 import org.marsrover.direction.DirectionEnum;
 import org.marsrover.direction.Directions;
@@ -18,8 +19,10 @@ import java.util.Scanner;
 
 public class MarsExpedition {
     public void start() {
+        AppConfig appConfig = new AppConfig();
+        Directions directions = appConfig.createDirections();
         Scanner scanner = new Scanner(System.in);
-        InputHandler inputHandler = new InputHandler(scanner);
+        InputHandler inputHandler = new InputHandler(scanner, directions);
         Plateau plateau = new Plateau();
 
         Grid grid = plateau.getGrid();
@@ -38,7 +41,7 @@ public class MarsExpedition {
         Position targetPosition = inputHandler.readTargetPosition();
         PathFinder pathFinder = new PathFinder(rover.getPosition(), targetPosition, grid);
         List<Position> path = pathFinder.findPath(rover.getStepSize());
-        List<VehicleCommand> commands = getCommandsFromPath(path, rover.getDirection().getDirectionEnum());
+        List<VehicleCommand> commands = getCommandsFromPath(path, rover.getDirection());
         rover.executeCommands(commands);
 
         gridPrinter.print();
@@ -47,14 +50,13 @@ public class MarsExpedition {
         scanner.close();
     }
 
-    private List<VehicleCommand> getCommandsFromPath(List<Position> path, DirectionEnum initialDirection) {
+    private List<VehicleCommand> getCommandsFromPath(List<Position> path, Direction currentDirection) {
 
         if (path == null || path.size() < 2) {
             return new LinkedList<>();
         }
 
         List<VehicleCommand> commands = new LinkedList<>();
-        Direction currentDirection = Directions.getDirection(initialDirection);
 
         for (int i = 1; i < path.size(); i++) {
             Position previousPosition  = path.get(i - 1);

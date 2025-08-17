@@ -3,14 +3,16 @@ package org.marsrover.direction;
 import java.util.Map;
 
 public class Directions {
-    private static final Map<DirectionEnum, Direction> directions = Map.of(
-            DirectionEnum.NORTH, new North(),
-            DirectionEnum.EAST, new East(),
-            DirectionEnum.SOUTH, new South(),
-            DirectionEnum.WEST, new West()
-    );
+    private final Map<DirectionEnum, Direction> directions;
 
-    public static Direction getDirection(DirectionEnum directionEnum) {
+    public Directions(Map<DirectionEnum, Direction> directions) {
+        this.directions = directions;
+    }
+
+    public Direction getDirection(DirectionEnum directionEnum) {
+        if (!directions.containsKey(directionEnum)) {
+            throw new IllegalStateException("No Direction linked to given DirectionEnum: " + directionEnum);
+        }
         return directions.get(directionEnum);
     }
 }

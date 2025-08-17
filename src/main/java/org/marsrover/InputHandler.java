@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 public class InputHandler {
 
+    private final Directions directions;
     private final Scanner scanner;
     private final Map<Character, VehicleCommand> vehicleCommandMap = Map.of(
             'L', new TurnLeftCommand(),
@@ -22,8 +23,9 @@ public class InputHandler {
             'M', new MoveForwardCommand()
     );
 
-    public InputHandler(Scanner scanner) {
+    public InputHandler(Scanner scanner, Directions directions) {
         this.scanner = scanner;
+        this.directions = directions;
     }
 
     public Rover createRover() {
@@ -33,7 +35,7 @@ public class InputHandler {
         System.out.println("Bitte gib die Ausrichtung des Rovers ein (N, S, E, W):");
         String orientation = scanner.next();
         DirectionEnum directionEnum = DirectionEnum.fromString(orientation);
-        Direction direction = Directions.getDirection(directionEnum);
+        Direction direction = directions.getDirection(directionEnum);
         return new Rover(new Position(x, y), direction);
     }
 
